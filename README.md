@@ -1,3 +1,5 @@
+# 随缘更新。以下是原README.md
+
 # ThePitStudy
 ## What is ThePitStudy and why should I use it?
 
