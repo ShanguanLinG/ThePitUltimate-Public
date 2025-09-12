@@ -1,0 +1,52 @@
+#  _____  _            ____   _  _    _   _  _  _    _                    _
+# |_   _|| |__    ___ |  _ \ (_)| |_ | | | || || |_ (_) _ __ ___    __ _ | |_  ___
+#   | |  | '_ \  / _ \| |_) || || __|| | | || || __|| || '_ ` _ \  / _` || __|/ _ \
+#   | |  | | | ||  __/|  __/ | || |_ | |_| || || |_ | || | | | | || (_| || |_|  __/
+#   |_|  |_| |_| \___||_|    |_| \__| \___/ |_| \__||_||_| |_| |_| \__,_| \__|\___|
+#    Your QQ: {qq}
+#    该版本生成代码为 [ {random}-{randomstring:6} ] 请注意此构造的jar请不要泄漏给他人,已在jar内随机插入水印 泄漏者必追溯！
+#    #{date}
+#
+#
+#没有非必要的定制功能 不需要填!
+eigenToken: ""
+service:
+  mongodb:
+    ip: 127.0.0.1
+    port: 27017
+    database: thePit
+    #不需要直接删除即可
+    user: admin
+    password: admin
+#debug选项
+debug:
+  debugServer: false
+  public: true
+  infinityNpcLoc:
+    ==: org.bukkit.Location
+    world: world
+    x: -9.117847274619841
+    y: 101.0
+    z: -6.306275814520202
+    pitch: 38.875862
+    yaw: -273.7115
+#宵禁设置
+curfew:
+  #启用
+  enable: false
+  #几点开始
+  start: 0
+  #几点结束
+  end: 7
+server-name: "&e天坑乱斗"
+bot-name: "&cBot"
+#阵营活动开始时间戳
+#https://tool.lu/timestamp/
+#时间戳网址↑
+genesis-start-date: 1675339795842
+#30s内换图播报
+scoreboard:
+  viewSwitchMapCooldownPre30s: false
+currentMapId: 0
+#设置 -1 为关闭 轮换, 详细id见本jar的 worlds/world.yml
+duration: -1

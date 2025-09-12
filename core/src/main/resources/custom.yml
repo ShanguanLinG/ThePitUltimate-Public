@@ -1,0 +1,210 @@
+water-marks: '&cThePitUltimate'
+luck-gem: 0.3
+vip-price: 500
+sewers-spawn: 60
+price-name: 点券
+lobby-command: hub
+boost: 2.0
+dateFormat: MM/dd HH:mm
+pitSupportPermission: pit.vip
+removeSupportWhenNoPermission: false
+GenesisAngel-npc-skin: ewogICJ0aW1lc3RhbXAiIDogMTYxMTcxMzEzMTMyOCwKICAicHJvZmlsZUlkIiA6ICJiMGQ3MzJmZTAwZjc0MDdlOWU3Zjc0NjMwMWNkOThjYSIsCiAgInByb2ZpbGVOYW1lIiA6ICJPUHBscyIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS8xOTA3MjdjNjNkMmQ3MjUwZTQ1NTA4NTBiMmQ0YTdlMTEwZDFkMzliNjhmYjcwMmRkYjkzYmIwYjJlZjg0ZCIsCiAgICAgICJtZXRhZGF0YSIgOiB7CiAgICAgICAgIm1vZGVsIiA6ICJzbGltIgogICAgICB9CiAgICB9CiAgfQp9
+GenesisDemon-npc-skin: ewogICJ0aW1lc3RhbXAiIDogMTY1NzU5OTQzODI2MCwKICAicHJvZmlsZUlkIiA6ICJmZTYxY2RiMjUyMTA0ODYzYTljY2E2ODAwZDRiMzgzZSIsCiAgInByb2ZpbGVOYW1lIiA6ICJNeVNoYWRvd3MiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDAyMWRiYjc3MzdiZDM1MjM0NDRkNTc3NjBlMWY2MzkzOGVlMTI4NjA4MDM4OTU1M2IzYTY4M2VlOGEzYjkwYiIKICAgIH0KICB9Cn0=
+keeper-npc-skin: eyJ0aW1lc3RhbXAiOjE1ODE5MTIzMjQ4MzQsInByb2ZpbGVJZCI6IjgyYzYwNmM1YzY1MjRiNzk4YjkxYTEyZDNhNjE2OTc3IiwicHJvZmlsZU5hbWUiOiJOb3ROb3RvcmlvdXNOZW1vIiwic2lnbmF0dXJlUmVxdWlyZWQiOnRydWUsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS83NzI4MWEwZDVkOWY3OGU4Y2FlOTlmMGVhNDExNDhkYmQ2YjJkZTAyNmEzYzc5NTgyMzg4NjMyMGJhNWVkMDI0In19fQ==
+mail-npc-skin: ewogICJ0aW1lc3RhbXAiIDogMTY0MjQ0OTExOTcxNCwKICAicHJvZmlsZUlkIiA6ICJkODAwZDI4MDlmNTE0ZjkxODk4YTU4MWYzODE0Yzc5OSIsCiAgInByb2ZpbGVOYW1lIiA6ICJ0aGVCTFJ4eCIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9kNDkwZjY2OGU4ZGY0YzliZDMyODVjMmJiNWU0NWU0YWZlYWZiYzhkZWQ0Y2VkZWQzMzU0MmNjZTgyODVmMzM1IgogICAgfQogIH0KfQ==
+perk-npc-skin: ewogICJ0aW1lc3RhbXAiIDogMTY2OTQ2NDc3NDI4MCwKICAicHJvZmlsZUlkIiA6ICJmODFhNzJhZWZjMjY0MjU0YTQ5NzE0OWYzMjJiZjJlNSIsCiAgInByb2ZpbGVOYW1lIiA6ICJEZXJsYW5fODgiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGFmMmQ1ZjgzZjIyNGU0ODA0NjgwZTBjMzNlNGEyZWNjNTk2ZmYyYjBjNzFlMDY2ODgxNmJhNDI5MTJhYzQyZiIKICAgIH0KICB9Cn0=
+prestige-npc-skin: ewogICJ0aW1lc3RhbXAiIDogMTYxNDE5OTYwMzQwOCwKICAicHJvZmlsZUlkIiA6ICJiNzQ3OWJhZTI5YzQ0YjIzYmE1NjI4MzM3OGYwZTNjNiIsCiAgInByb2ZpbGVOYW1lIiA6ICJTeWxlZXgiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGRlOTgyMDAzNTBkMjM4ZjJjNjBhYWI5MmE0NmM2ZTY1ODc5ZWE1ZWE3OWExMGJiZmU1NjZhNTg5MWUwNDNiOSIKICAgIH0KICB9Cn0=
+quest-npc-skin: ewogICJ0aW1lc3RhbXAiIDogMTU5OTIxNzI3NjA5NywKICAicHJvZmlsZUlkIiA6ICJkNjBmMzQ3MzZhMTI0N2EyOWI4MmNjNzE1YjAwNDhkYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJCSl9EYW5pZWwiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmM4Yjc5N2M1NjQ4YzQwNDFkNWE0ZTYwYTY1OGMxMjAzMGJiZGQ3OTM4NWRjMzA4NGRlZmVkYzBjZmQ1MmZjNSIKICAgIH0KICB9Cn0=
+shop-npc-skin: ewogICJ0aW1lc3RhbXAiIDogMTY0NTk4MDY0NjU4NywKICAicHJvZmlsZUlkIiA6ICI1MjhlYzVmMmEzZmM0MDA0YjYwY2IwOTA5Y2JiMjdjYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJQdWxpenppIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2NmNzhlNzVkZjlkMjg4YjM5ZDRlMDFjNzEwYjRlZjNhYmI2NDQwNGVmZDU2YWQ5OTE1ZTU5ZWVhMTI2ZWNlMGUiCiAgICB9CiAgfQp9
+status-npc-skin: ewogICJ0aW1lc3RhbXAiIDogMTY0ODY3MjI4MTczMiwKICAicHJvZmlsZUlkIiA6ICI1MjhlYzVmMmEzZmM0MDA0YjYwY2IwOTA5Y2JiMjdjYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJQdWxpenppIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2MxNTIxYTAyNTY2ODgxYjIwNTA4Mzg5YjM4MmEzMDIzMWE4NDViYTc0OWEyN2QxNDQ5NTUyNzQ3NDgxY2Y4YjkiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==
+noob-protect:
+  enable: true
+  level: 120
+  damage_boost: 1.1
+  damage_reduce: 0.9
+mm-listener:
+  mm_mob_a:
+    xp-provide: 10-100
+    coins-provide: 10-100
+custom-chat-format:
+  enable: false
+  format: '%pit_genesis_tag%%pit_level_tag_roman% %s&f: %s'
+event-online-required:
+  hunt: 1
+  dragon_egg: 1
+  respawn_family: 1
+  auction: 1
+  cake: 1
+  care_package: 20
+  everyone_bounty_event: 10
+  quick_math_event: 5
+  ham: 20
+  rage_pit: 20
+  red_vs_blue: 20
+  spire: 20
+  block_head: 999
+  squads: 999
+highest-prestige: 35
+title:
+  event:
+    epic:
+      animation:
+        - '&5&l大型事件! '
+        - '&d&l大型事件! '
+      interval: 10
+scoreboard:
+  animation:
+    - '&f&l神&5&l话&5&l天&5&l坑'
+    - '&d&l神&f&l话&5&l天&5&l坑'
+    - '&5&l神&d&l话&f&l天&5&l坑'
+    - '&5&l神&5&l话&d&l天&f&l坑'
+    - '&5&l神&5&l话&5&l天&d&l坑'
+    - '&5&l神&5&l话&f&l天&5&l坑'
+    - '&5&l神&f&l话&d&l天&5&l坑'
+    - '&f&l神&d&l话&5&l天&5&l坑'
+    - '&d&l神&5&l话&5&l天&5&l坑'
+    - '&5&l神&5&l话&5&l天&5&l坑'
+    - '&5&l神&5&l话&5&l天&f&l坑'
+    - '&5&l神&5&l话&f&l天&d&l坑'
+    - '&5&l神&f&l话&d&l天&5&l坑'
+    - '&f&l神&d&l话&5&l天&5&l坑'
+    - '&d&l神&5&l话&5&l天&5&l坑'
+    - '&5&l神&f&l话&5&l天&5&l坑'
+    - '&d&l神&5&l话&f&l天&5&l坑'
+    - '&5&l神&d&l话&5&l天&f&l坑'
+    - '&5&l神&5&l话&d&l天&5&l坑'
+    - '&5&l神&5&l话&5&l天&d&l坑'
+  loading:
+    - ''
+    - '&c正在加载档案...'
+    - '&c请稍等片刻...'
+    - ''
+    - '&c公告群: &exxxxxxx'
+    - ''
+    - '&cThePitUltimate'
+scoreboard-showtime: true
+forbidEnchant:
+  - 'false'
+bounty:
+  updateInterval: 1
+rate:
+  1:
+    dark:
+      vip1:
+        test: pit.vip1
+        value: 0.08
+      vip2:
+        test: pit.vip2
+        value: 0.04
+      default:
+        value: 0.02
+    normal:
+      vip1:
+        test: pit.vip1
+        value: 0.08
+      vip2:
+        test: pit.vip2
+        value: 0.04
+      default:
+        value: 0.02
+    rage:
+      vip1:
+        test: pit.vip1
+        value: 0.08
+      vip2:
+        test: pit.vip2
+        value: 0.04
+      default:
+        value: 0.02
+    sewers:
+      vip1:
+        test: pit.vip1
+        value: 0.08
+      vip2:
+        test: pit.vip2
+        value: 0.04
+      default:
+        value: 0.02
+  2:
+    dark:
+      vip1:
+        test: pit.vip1
+        value: 0.08
+      vip2:
+        test: pit.vip2
+        value: 0.04
+      default:
+        value: 0.02
+    normal:
+      vip1:
+        test: pit.vip1
+        value: 0.08
+      vip2:
+        test: pit.vip2
+        value: 0.04
+      default:
+        value: 0.02
+    rage:
+      vip1:
+        test: pit.vip1
+        value: 0.08
+      vip2:
+        test: pit.vip2
+        value: 0.04
+      default:
+        value: 0.02
+    sewers:
+      vip1:
+        test: pit.vip1
+        value: 0.08
+      vip2:
+        test: pit.vip2
+        value: 0.04
+      default:
+        value: 0.02
+
+  3:
+    dark:
+      vip1:
+        test: pit.vip1
+        value: 0.08
+      vip2:
+        test: pit.vip2
+        value: 0.04
+      default:
+        value: 0.02
+    normal:
+      vip1:
+        test: pit.vip1
+        value: 0.08
+      vip2:
+        test: pit.vip2
+        value: 0.04
+      default:
+        value: 0.02
+    rage:
+      vip1:
+        test: pit.vip1
+        value: 0.08
+      vip2:
+        test: pit.vip2
+        value: 0.04
+      default:
+        value: 0.02
+    sewers:
+      vip1:
+        test: pit.vip1
+        value: 0.08
+      vip2:
+        test: pit.vip2
+        value: 0.04
+      default:
+        value: 0.02
+mythicDropChance:
+  vip1:
+    test: permission.vip1
+    value: 0.01
+  vip2:
+    test: permission.vip2
+    value: 0.02
+kingsQuestsMarker: 5c854119-9c7c-4ae5-9649-fe8c039193b8

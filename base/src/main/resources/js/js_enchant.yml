@@ -1,0 +1,30 @@
+enchants:
+  name: "超级击飞加闪电"
+  internal_name: "super_knockback_lightning"
+  js_file: "超级击飞加闪电.js"
+  max: 3
+  # NORMAL
+  # RARE
+  # DARK_NORMAL
+  # DARK_RARE
+  # SEWER_NORMAL
+  # SEWER_RARE
+  # RAGE
+  # RAGE_RARE
+  # OP
+  rarity: "OP"
+  # weapon
+  # bow
+  # armor
+  type: "weapon"
+  # 追踪器
+  # 在JS中必须有对应的方法
+  # 否则报错
+  # attack
+  # damaged
+  # shoot
+  # kill
+  # killed
+  # respawn
+  trigger:
+    - attack
