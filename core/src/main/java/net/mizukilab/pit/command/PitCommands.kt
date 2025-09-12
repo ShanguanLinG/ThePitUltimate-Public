@@ -81,14 +81,16 @@ class PitCommands {
     private val PATTEN_DEFAULT_YMD = "yyyy-MM-dd"
     private val dateFormat = SimpleDateFormat(PATTEN_DEFAULT_YMD)
     private val numFormat = DecimalFormat("0.00")
-    private val COOLDOWN_SHOW: Cache<UUID, Cooldown> = CacheBuilder.newBuilder().expireAfterWrite(1,TimeUnit.MINUTES).build<UUID,Cooldown>()
+    private val COOLDOWN_SHOW: Cache<UUID, Cooldown> =
+        CacheBuilder.newBuilder().expireAfterWrite(1, TimeUnit.MINUTES).build<UUID, Cooldown>()
 
     @Execute(name = "thepit", aliases = ["天坑", "天坑乱斗", "version", "ver"])
     fun info(@Context player: Player) {
-        player.sendMessage(CC.translate(
-            "&7Currently running &cThePitUltimate"))
-            if (player.name.endsWith("MiriamZQAT")) {
-        }
+        player.sendMessage(
+            CC.translate(
+                "&7Currently running &cThePitUltimate Public"
+            )
+        )
     }
 
     @Execute(name = "startDate")
@@ -972,6 +974,7 @@ class PitCommands {
                 player.itemInHand = mythicItem.toItemStack()
                 player.sendMessage(CC.translate("&a已将连射附魔切换为 B 类型！"))
             }
+
             volleyBLevel >= 1 -> {
 
                 mythicItem.enchantments.apply {
@@ -984,6 +987,7 @@ class PitCommands {
             }
         }
     }
+
     @Execute(name = "cool")
     fun cool(@Context player: Player) {
         if (!PlayerUtil.isPlayerUnlockedPerk(player, "cool_perk")) {
