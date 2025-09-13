@@ -51,6 +51,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -102,20 +103,20 @@ public class EnchantButton extends Button {
         try {
             PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
             String enchantingItemStr = profile.getEnchantingItem();
-            
+
             ItemStack currentItem = null;
             if (enchantingItemStr != null) {
                 currentItem = InventoryUtil.deserializeItemStack(enchantingItemStr);
             }
-            
+
             if (currentItem == null || currentItem.getType() == Material.AIR) {
                 currentItem = this.item;
             }
-            
+
             if (currentItem == null || currentItem.getType() == Material.AIR) {
                 return getDefaultDisplayItem();
             }
-            
+
             IMythicItem mythicItem = Utils.getMythicItem0(currentItem);
             MythicColor color = MythicColor.valueOf(ItemUtil.getItemStringData(mythicItem.toItemStack(), "mythic_color").toUpperCase());
             int level = mythicItem.getTier();
@@ -168,17 +169,17 @@ public class EnchantButton extends Button {
         // 从profile中获取最新的物品数据，而不是使用构造函数传入的旧数据
         PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
         String enchantingItemStr = profile.getEnchantingItem();
-        
+
         ItemStack actualItem = null;
         if (enchantingItemStr != null) {
             actualItem = InventoryUtil.deserializeItemStack(enchantingItemStr);
         }
-        
+
         // 如果profile中没有物品或物品为空，则使用传入的item作为备用
         if (actualItem == null || actualItem.getType() == Material.AIR) {
             actualItem = this.item;
         }
-        
+
         if (actualItem == null || actualItem.getType() == Material.AIR) {
             return;
         }
@@ -580,8 +581,18 @@ public class EnchantButton extends Button {
             for (AbstractEnchantment abstractEnchantment : mythicItem.getEnchantments().keySet()) {
                 totalLevel += mythicItem.getEnchantments().getInt(abstractEnchantment);
             }
-            if ((totalLevel == 8 && RandomUtil.hasSuccessfullyByChance(0.9)) || totalLevel == 9) {
-                mythicItem.getEnchantments().put((AbstractEnchantment) RandomUtil.helpMeToChooseOne(mythicItem.getEnchantments().keySet().toArray()), 1);
+            if (totalLevel >= 9) {
+                AbstractEnchantment maxLevelEnchant = null;
+                int maxLevel = 0;
+                for (Map.Entry<AbstractEnchantment, Integer> entry : mythicItem.getEnchantments().entrySet()) {
+                    if (entry.getValue() > maxLevel) {
+                        maxLevel = entry.getValue();
+                        maxLevelEnchant = entry.getKey();
+                    }
+                }
+                if (maxLevelEnchant != null && maxLevel > 1) {
+                    mythicItem.getEnchantments().put(maxLevelEnchant, maxLevel - 1);
+                }
             }
         }
         boolean badLuck = true;
@@ -834,5 +845,4 @@ public class EnchantButton extends Button {
 
         return false;
     }
-
 }
