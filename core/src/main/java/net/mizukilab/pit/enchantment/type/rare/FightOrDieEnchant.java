@@ -81,6 +81,6 @@ public class FightOrDieEnchant extends AbstractEnchantment implements Listener, 
 
     @Override
     public String getText(int level, Player player) {
-        return getCooldownActionText(cooldown.getOrDefault(player.getUniqueId(), new Cooldown(0)));
+        return getCooldownActionText(player, cooldown.getOrDefault(player.getUniqueId(), new Cooldown(0)));
     }
 }

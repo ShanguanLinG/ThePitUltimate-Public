@@ -100,6 +100,6 @@ public class ThePunchEnchant extends AbstractEnchantment implements Listener,IAt
 
     @Override
     public String getText(int level, Player player) {
-        return getCooldownActionText(cooldown.getOrDefault(player.getUniqueId(), new Cooldown(0)));
+        return getCooldownActionText(player, cooldown.getOrDefault(player.getUniqueId(), new Cooldown(0)));
     }
 }

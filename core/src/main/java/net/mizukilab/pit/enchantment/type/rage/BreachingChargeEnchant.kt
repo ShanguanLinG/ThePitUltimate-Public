@@ -90,7 +90,7 @@ class BreachingChargeEnchant : AbstractEnchantment(), Listener,IAttackEntity, IP
     }
 
     override fun getText(level: Int, player: Player): String {
-        return getCooldownActionText(Companion.cooldown.getOrDefault(player.uniqueId, Cooldown(0)))
+        return getCooldownActionText(player, Companion.cooldown.getOrDefault(player.uniqueId, Cooldown(0)))
     }
     @EventHandler
     fun quit(pq :PlayerQuitEvent){

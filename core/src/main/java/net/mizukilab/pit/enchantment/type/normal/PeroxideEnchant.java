@@ -95,6 +95,6 @@ public class PeroxideEnchant extends AbstractEnchantment implements IPlayerDamag
 
     @Override
     public String getText(int level, Player player) {
-        return getCooldownActionText(cooldown.getOrDefault(player.getUniqueId(), new Cooldown(0)));
+        return getCooldownActionText(player, cooldown.getOrDefault(player.getUniqueId(), new Cooldown(0)));
     }
 }

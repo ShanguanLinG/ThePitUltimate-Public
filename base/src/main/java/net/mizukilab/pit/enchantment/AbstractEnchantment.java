@@ -11,6 +11,7 @@ import net.mizukilab.pit.enchantment.param.item.RodOnly;
 import net.mizukilab.pit.enchantment.param.item.WeaponOnly;
 import net.mizukilab.pit.enchantment.rarity.EnchantmentRarity;
 import net.mizukilab.pit.item.AbstractPitItem;
+import net.mizukilab.pit.util.PlayerUtil;
 import net.mizukilab.pit.util.PublicUtil;
 import net.mizukilab.pit.util.cooldown.Cooldown;
 import net.mizukilab.pit.util.time.TimeUtil;
@@ -42,20 +43,27 @@ public abstract class AbstractEnchantment {
     @Nullable
     public abstract Cooldown getCooldown();
     //填写此玩家触发附魔的所需冷却时间
-    public String getCooldownActionText(Cooldown cooldown) {
+    public String getCooldownActionText(Player player, Cooldown cooldown) {
+        if (PlayerUtil.isVenom(player) || PlayerUtil.isEquippingSomber(player)) { return "&c&l✘"; }
         return (cooldown.hasExpired() ? "&a&l✔" : "&c&l" + TimeUtil.millisToRoundedTime(cooldown.getRemaining()).replace(" ", ""));
     }
 
     //填写每x次攻击触发
     public String getHitActionText(Player player, int activeHit) {
-        int hit = (player.getItemInHand() != null && player.getItemInHand().getType() == Material.BOW ? PlayerProfile.getPlayerProfileByUuid(player.getUniqueId()).getBowHit() : PlayerProfile.getPlayerProfileByUuid(player.getUniqueId()).getMeleeHit());
+        if (PlayerUtil.isVenom(player) || PlayerUtil.isEquippingSomber(player)) { return "&c&l✘"; }
+
+        PlayerProfile pp = PlayerProfile.getRawCache(player.getUniqueId());
+        if (pp == null) { return "&c&l✘"; }
+
+        int hit = (player.getItemInHand() != null && player.getItemInHand().getType() == Material.BOW ? pp.getBowHit() : pp.getMeleeHit());
         return (hit % activeHit == 0 ? "&a&l✔" : "&e&l" + (activeHit - hit % activeHit));
     }
 
     //Todo: 需要一个判断玩家身上附魔是否生效中(持续时间内)的方法 (虽然也许不应该写在这里)
     public int getItemEnchantLevel(AbstractPitItem im) {
-        if (im == null)
+        if (im == null) {
             return -1;
+        }
         return im.getEnchantments().getInt(this);
     }
 
@@ -97,8 +105,12 @@ public abstract class AbstractEnchantment {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         AbstractEnchantment that = (AbstractEnchantment) o;
         return that.getNbtName().equals(this.getNbtName());
     }

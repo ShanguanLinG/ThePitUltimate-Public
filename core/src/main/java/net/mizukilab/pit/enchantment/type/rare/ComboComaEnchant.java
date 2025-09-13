@@ -77,7 +77,7 @@ public class ComboComaEnchant extends AbstractEnchantment implements IAttackEnti
         byte b = 5;
         if ((Cooldown.getOrDefault(player.getUniqueId(), new Cooldown(0L))).hasExpired())
             return (level % b == 0) ? "&a&l✔" : (new StringBuilder()).insert(0, "&e&l").append(b - level % b).toString();
-        return getCooldownActionText(Cooldown.getOrDefault(player.getUniqueId(), new Cooldown(0L)));
+        return getCooldownActionText(player, Cooldown.getOrDefault(player.getUniqueId(), new Cooldown(0L)));
     }
 
     @Override

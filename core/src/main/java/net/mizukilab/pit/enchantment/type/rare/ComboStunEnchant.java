@@ -96,7 +96,7 @@ public class ComboStunEnchant extends AbstractEnchantment implements Listener, I
         if (cooldown.getOrDefault(player.getUniqueId(), new Cooldown(0)).hasExpired()) {
             return (hit % require == 0 ? "&a&l✔" : "&e&l" + (require - hit % require));
         } else {
-            return getCooldownActionText(cooldown.getOrDefault(player.getUniqueId(), new Cooldown(0)));
+            return getCooldownActionText(player, cooldown.getOrDefault(player.getUniqueId(), new Cooldown(0)));
         }
     }
 }

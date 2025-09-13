@@ -86,6 +86,6 @@ class HappyNewYearEnchant : AbstractEnchantment(), IPlayerDamaged, IActionDispla
     }
 
     override fun getText(level: Int, player: Player): String {
-        return getCooldownActionText(cooldown.getOrDefault(player.uniqueId, Cooldown(0)))
+        return getCooldownActionText(player, cooldown.getOrDefault(player.uniqueId, Cooldown(0)))
     }
 }
