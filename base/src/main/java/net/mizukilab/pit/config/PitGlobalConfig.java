@@ -106,32 +106,6 @@ public class PitGlobalConfig extends Configuration {
     )
     private String mongoPassword;
 
-/*    @Setter
-    @Getter
-    @ConfigData(
-            path = "service.redis.enable"
-    )
-    private boolean redisEnable;
-
-    @Setter
-    @Getter
-    @ConfigData(
-            path = "service.redis.ip"
-    )
-    private String redisAddress;
-    @Setter
-    @Getter
-    @ConfigData(
-            path = "service.redis.port"
-    )
-    private int redisPort;
-
-    @Setter
-    @Getter
-    @ConfigData(
-            path = "service.redis.password"
-    )
-    private String redisPassword;*/
     @Setter
     @Getter
     @ConfigData(

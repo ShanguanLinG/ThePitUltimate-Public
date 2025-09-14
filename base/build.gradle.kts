@@ -1,5 +1,4 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import java.util.*
 
 plugins {
     kotlin("plugin.lombok") version "2.1.20"

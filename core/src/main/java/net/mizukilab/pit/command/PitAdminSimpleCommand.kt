@@ -205,10 +205,11 @@ class PitAdminSimpleCommand {
     fun reboot(
         @Context sender: CommandSender,
         @Arg("duration") duration: Duration,
+        @Arg("reason") reason: String
     ) {
         ThePit.getInstance()
             .rebootRunnable
-            .addRebootTask(RebootTask("修复BUG", System.currentTimeMillis() + duration.toMillis()))
+            .addRebootTask(RebootTask(reason, System.currentTimeMillis() + duration.toMillis()))
     }
 
 

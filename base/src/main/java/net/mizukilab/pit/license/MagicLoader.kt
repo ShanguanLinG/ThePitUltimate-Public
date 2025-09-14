@@ -1,13 +1,7 @@
 package net.mizukilab.pit.license
 
-import cn.charlotte.pit.ThePit
 import lombok.SneakyThrows
-import net.mizukilab.pit.classloaders.CachedTimeProfilerClassLoader
-import org.bukkit.Bukkit
 import pku.yim.license.MagicLicense
-import pku.yim.license.Response
-import java.lang.Thread.sleep
-import java.util.*
 import kotlin.concurrent.Volatile
 import kotlin.system.exitProcess
 
@@ -23,30 +17,12 @@ object MagicLoader {
     fun load() {
         Thread {
             try {
-                ThePit.getInstance().info("§e正在验证凭证，请稍候…")
-                val magicLicense = MagicLicense(ThePit.getInstance())
-                val response = magicLicense.authenticate(
-                    "jnic.dev",
-                    ThePit.getInstance().description.name,
-                    ThePit.getInstance().description.version,
-                    false
-                )
-                this.magicLicense = magicLicense;
                 synchronized(lock) {
                     isLoaded = true
                     lock.notifyAll()
                 }
-                ThePit.getInstance().info(
-                    if (response == Response.ACCEPT)
-                        "§a验证成功，感谢您的支持 §c❤"
-                    else
-                        response.toString()
-                )
-            } catch (ex: Exception) {
-                synchronized(lock) {
-                    exception = ex
-                    lock.notifyAll()
-                }
+            }catch (e:Exception){
+                exception = e
             }
         }.start()
     }
@@ -58,7 +34,7 @@ object MagicLoader {
     fun ensureIsLoaded() {
         if (!isLoaded) {
             synchronized(lock) {
-                (lock as Object).wait()
+                lock.wait()
             }
             if (exception != null) {
                 exception!!.printStackTrace()

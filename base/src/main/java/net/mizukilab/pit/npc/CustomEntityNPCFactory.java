@@ -64,13 +64,11 @@ public class CustomEntityNPCFactory implements Listener {
     private void cleanupPlayerHolograms(Player player) {
         Map<UUID, List<Hologram>> playerHolograms = playerNPCHolograms.get(player.getUniqueId());
         if (playerHolograms != null) {
-            playerHolograms.values().forEach(holograms -> {
-                holograms.forEach(hologram -> {
-                    if (hologram.isSpawned()) {
-                        hologram.deSpawn();
-                    }
-                });
-            });
+            playerHolograms.values().forEach(holograms -> holograms.forEach(hologram -> {
+                if (hologram.isSpawned()) {
+                    hologram.deSpawn();
+                }
+            }));
             playerHolograms.clear();
         }
     }
@@ -212,14 +210,11 @@ public class CustomEntityNPCFactory implements Listener {
     }
 
     private double getHologramHeight(EntityType entityType) {
-        switch (entityType) {
-            case IRON_GOLEM:
-                return 2.5;
-            case SILVERFISH, BAT:
-                return 0.6;
-            default:
-                return 1.9;
-        }
+        return switch (entityType) {
+            case IRON_GOLEM -> 2.5;
+            case SILVERFISH, BAT -> 0.6;
+            default -> 1.9;
+        };
     }
 
 
@@ -313,15 +308,11 @@ public class CustomEntityNPCFactory implements Listener {
             }
         });
 
-        playerNPCHolograms.values().forEach(playerHolograms -> {
-            playerHolograms.values().forEach(holograms -> {
-                holograms.forEach(hologram -> {
-                    if (hologram.isSpawned()) {
-                        hologram.deSpawn();
-                    }
-                });
-            });
-        });
+        playerNPCHolograms.values().forEach(playerHolograms -> playerHolograms.values().forEach(holograms -> holograms.forEach(hologram -> {
+            if (hologram.isSpawned()) {
+                hologram.deSpawn();
+            }
+        })));
 
         entityToNPCMap.clear();
         playerNPCHolograms.clear();
@@ -334,9 +325,7 @@ public class CustomEntityNPCFactory implements Listener {
         if (player == null || !player.isOnline()) {
             return;
         }
-        Bukkit.getScheduler().runTaskLater(ThePit.getInstance(), () -> {
-            showNPCsToPlayer(player);
-        }, 20L);
+        Bukkit.getScheduler().runTaskLater(ThePit.getInstance(), () -> showNPCsToPlayer(player), 20L);
     }
 
     @EventHandler
