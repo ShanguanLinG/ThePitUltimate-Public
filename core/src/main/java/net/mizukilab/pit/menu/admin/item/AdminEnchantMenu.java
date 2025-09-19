@@ -3,12 +3,12 @@ package net.mizukilab.pit.menu.admin.item;
 import cn.charlotte.pit.ThePit;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.mizukilab.pit.enchantment.AbstractEnchantment;
-import net.mizukilab.pit.menu.admin.item.button.EnchantButton;
 import net.mizukilab.pit.util.item.ItemBuilder;
 import net.mizukilab.pit.util.menu.Button;
 import net.mizukilab.pit.util.menu.Menu;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import net.mizukilab.pit.menu.admin.item.button.EnchantButton;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
