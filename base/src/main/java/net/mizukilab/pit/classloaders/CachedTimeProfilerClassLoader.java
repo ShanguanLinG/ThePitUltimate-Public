@@ -1,35 +1,40 @@
 package net.mizukilab.pit.classloaders;
 
-import org.jetbrains.annotations.Nullable;
-
-import java.net.URL;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class CachedTimeProfilerClassLoader extends ClassLoader{
-    Map<String,Class<?>> classes = new ConcurrentHashMap();
+public class CachedTimeProfilerClassLoader extends ClassLoader {
+    private final Map<String, Class<?>> classes = new ConcurrentHashMap<>();
+    private final Map<String, Object> loadingLocks = new ConcurrentHashMap<>();
+
     public CachedTimeProfilerClassLoader(ClassLoader parent) {
         super(parent);
     }
 
     @Override
     public Class<?> loadClass(String name) throws ClassNotFoundException {
-        Class<?> aClass1 = classes.get(name);
-        if(aClass1 != null){
-            return aClass1;
+        Class<?> cachedClass = classes.get(name);
+        if (cachedClass != null) {
+            return cachedClass;
         }
-        long time = System.currentTimeMillis();
-        Class<?> aClass = super.loadClass(name);
-        if(System.currentTimeMillis() - time > 100){
-            System.out.println("Load class takes so long: " + aClass);
-        }
-        classes.put(name, aClass);
-        return aClass;
-    }
 
-    @Nullable
-    @Override
-    public URL getResource(String name) {
-        return super.getResource(name);
+        Object lock = loadingLocks.computeIfAbsent(name, k -> new Object());
+        synchronized (lock) {
+            cachedClass = classes.get(name);
+            if (cachedClass != null) {
+                return cachedClass;
+            }
+
+            long startTime = System.currentTimeMillis();
+            Class<?> loadedClass = super.loadClass(name);
+            long loadTime = System.currentTimeMillis() - startTime;
+
+            if (loadTime > 1000) {
+                System.out.println("Load class takes so long: " + loadedClass + " (" + loadTime + "ms)");
+            }
+
+            classes.put(name, loadedClass);
+            return loadedClass;
+        }
     }
 }
