@@ -1,6 +1,7 @@
 package net.mizukilab.pit.enchantment.type.rare;
 
 import cn.charlotte.pit.ThePit;
+import cn.charlotte.pit.api.PitInternalHook;
 import cn.charlotte.pit.data.PlayerProfile;
 import com.google.common.util.concurrent.AtomicDouble;
 import net.mizukilab.pit.data.operator.PackedOperator;
@@ -24,6 +25,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Skip
 @WeaponOnly
 public class BillionaireEnchant extends AbstractEnchantment implements IAttackEntity, IPlayerShootEntity {
+
+    PitInternalHook pitApi = ThePit.getApi();
 
     @Override
     public String getEnchantName() {
@@ -60,6 +63,9 @@ public class BillionaireEnchant extends AbstractEnchantment implements IAttackEn
         PackedOperator operator = (PackedOperator) ThePit.getInstance().getProfileOperator().getIOperator(attacker);
         if (operator != null) {
             PlayerProfile profile = operator.profile();
+            if (!(target instanceof Player)) return;
+            Player targetPlayer = (Player) target;
+            if (pitApi.getItemEnchantLevel(targetPlayer.getInventory().getLeggings(), "new_deal") > 0) return;
             if (profile.getCoins() >= enchantLevel * 100) {
                 boostDamage.getAndAdd(enchantLevel * 0.35);
                 profile.setCoins(profile.getCoins() - enchantLevel * 100 - (enchantLevel >= 3 ? 50 : 0));

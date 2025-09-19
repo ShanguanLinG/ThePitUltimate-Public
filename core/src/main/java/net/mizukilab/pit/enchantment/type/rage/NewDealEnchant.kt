@@ -54,22 +54,6 @@ class NewDealEnchant : AbstractEnchantment(), IPlayerDamaged {
         boostDamage: AtomicDouble,
         cancel: AtomicBoolean
     ) {
-        if (attacker is Player) {
-            val itemInHand = attacker.inventory.itemInHand
-            if ("mythic_sword" == ItemUtil.getInternalName(itemInHand)) {
-                val item = MythicSwordItem()
-                item.loadFromItemStack(itemInHand)
-                item.enchantments.entries
-                    .stream()
-                    .filter { (key): Map.Entry<AbstractEnchantment, Int?> -> key.nbtName == "billionaire" }
-                    .findFirst()
-                    .ifPresent { (_, value): Map.Entry<AbstractEnchantment?, Int> ->
-                        boostDamage.set(
-                            boostDamage.get() / (1 + 35 * value * 0.01)
-                        )
-                    }
-            }
-        }
         boostDamage.getAndAdd(enchantLevel * -0.02 - 0.02)
     }
 }
