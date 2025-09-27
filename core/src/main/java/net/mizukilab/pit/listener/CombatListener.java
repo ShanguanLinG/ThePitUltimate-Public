@@ -225,8 +225,8 @@ public class CombatListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onKilled(PlayerDeathEvent event) {
         event.getEntity().setNoDamageTicks(0);
-        event.getEntity().spigot().respawn();
         event.setDeathMessage(null);
+        event.getEntity().spigot().respawn();
         handlePlayerDeath(event.getEntity(), event.getEntity().getKiller(), true);
     }
 

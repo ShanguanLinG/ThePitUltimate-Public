@@ -207,7 +207,7 @@ public class CarePackageEvent extends AbstractEvent implements INormalEvent, Lis
     @Override
     public List<String> insert(Player player) {
         if (chest == null) return null;
-
+        if (player.getWorld() != chest.getWorld()) return null;
         List<String> lines = new ObjectArrayList<>();
         String targetDirection = DirectionUtil.getDetailedDirection(player, chest);
         int distance = (int) player.getLocation().distance(chest);
