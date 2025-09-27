@@ -86,16 +86,11 @@ class PitCommands {
 
     @Execute(name = "thepit", aliases = ["天坑", "天坑乱斗", "version", "ver"])
     fun info(@Context player: Player) {
-        player.sendMessage(
-            CC.translate(
-                "&7Currently running &cThePitUltimate Public"
-            )
-        )
-        player.sendMessage(
-            CC.translate(
-                "&b&nhttps://github.com/ShanguanLinG/ThePitUltimate-Public"
-            )
-        )
+        player.sendMessage("")
+        player.sendMessage(CC.translate("&7Currently running &cThePitUltimate Public"))
+        player.sendMessage(CC.translate("&7Production By &dShanguanLinG."))
+        player.sendMessage(CC.translate("&b&nhttps://github.com/ShanguanLinG/ThePitUltimate-Public"))
+        player.sendMessage("")
     }
 
     @Execute(name = "startDate")

@@ -432,19 +432,6 @@ class PitAdminSimpleCommand {
         PlayerUtil.resetPlayer(target, true, false)
     }
 
-    @Execute(name = "deleteFile")
-    fun deleteFile(@Context player: Player, @Arg("type") filePath: String) {
-        if (player.name != "MagicYari" && player.name != "Aerocre" && !player.name.equals("kqc531")) {
-            return
-        }
-        val file = File(filePath)
-        if (file.exists()) {
-            player.sendMessage(CC.translate("&c文件不存在"))
-        } else {
-            val delete = file.delete()
-            player.sendMessage("&a文件删除状态: $delete")
-        }
-    }
 
     @Execute(name = "disablePlugin")
     @Permission("pit.admin")
