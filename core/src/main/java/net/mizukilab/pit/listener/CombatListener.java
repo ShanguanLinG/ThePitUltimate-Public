@@ -1241,7 +1241,7 @@ public class CombatListener implements Listener {
 //        }
         killerProfile.getUnlockedPerkMap().values().forEach(i -> {
             AbstractPerk abstractPerk = i.getHandle(perkFactory.getPerkMap());
-            if (!abstractPerk.isPassive()) {
+            if (abstractPerk == null || !abstractPerk.isPassive()) {
                 return;
             }
             if (abstractPerk instanceof IPlayerKilledEntity ins) {
@@ -1250,7 +1250,7 @@ public class CombatListener implements Listener {
         });
         killerProfile.getChosePerk().values().forEach(i -> {
             AbstractPerk abstractPerk = i.getHandle(perkFactory.getPerkMap());
-            if (abstractPerk.isPassive()) {
+            if (abstractPerk == null || abstractPerk.isPassive()) {
                 return;
             }
             if (abstractPerk instanceof IPlayerKilledEntity ins) {
