@@ -90,7 +90,7 @@ class PitAdminCommands {
     @Execute(name = "createEquation")
     @Shortcut("eq")
     fun eqEvent(@Context player: Player, @Arg("eqQuest") eq: String, @Arg("eqAns") ans: String) {
-        ThePit.getApi().openEvent(QuickMathEvent(eq, ans), null)
+        ThePit.getApi().openEvent(QuickMathEvent(), null)
     }
 
     @Execute(name = "giveItemInHand")
