@@ -80,13 +80,40 @@ public class CombatListener implements Listener {
 
     ;
     public static CombatListener INSTANCE;
+    public static double eventBoost = 2.0; //1.0 to close
     private final DecimalFormat numFormat = new DecimalFormat("0.00");
     private final DecimalFormat intFormat = new DecimalFormat("0");
-    public static double eventBoost = 2.0; //1.0 to close
     String boostString = " &6(限时加成x" + eventBoost + "倍奖励)";
 
     public CombatListener() {
         INSTANCE = this;
+    }
+
+    @NotNull
+    private static String getBountyString(PlayerProfile killerProfile) {
+        String bountyColor = "&6";
+        if (ThePit.getInstance().getPitConfig().isGenesisEnable()) {
+            GenesisTeam team = killerProfile.getGenesisData().getTeam();
+            if (team == GenesisTeam.ANGEL) {
+                bountyColor = "&b";
+            }
+            if (team == GenesisTeam.DEMON) {
+                bountyColor = "&c";
+            }
+        }
+        return bountyColor;
+    }
+
+    public static boolean isNight() {
+        if (!ThePit.getInstance().getGlobalConfig().isCurfewEnable()) {
+            return false;
+        }
+
+        final Calendar instance = Calendar.getInstance();
+        instance.setTimeInMillis(System.currentTimeMillis());
+        final int hour = instance.get(Calendar.HOUR_OF_DAY);
+
+        return hour >= ThePit.getInstance().getGlobalConfig().getCurfewStart() && hour <= ThePit.getInstance().getGlobalConfig().getCurfewEnd();
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
@@ -126,7 +153,7 @@ public class CombatListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR,ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     private void onCombat(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player) {
             if (event.getDamager() instanceof Player damager) {
@@ -340,10 +367,10 @@ public class CombatListener implements Listener {
     }
 
     public void handleKill(Player killer, PlayerProfile killerProfile, LivingEntity player, PlayerProfile playerProfile) {
-        handleKill(killer,killerProfile,player,playerProfile,false);
+        handleKill(killer, killerProfile, player, playerProfile, false);
     }
 
-    public void handleKill(Player killer, PlayerProfile killerProfile, LivingEntity player, PlayerProfile playerProfile,boolean npc) {
+    public void handleKill(Player killer, PlayerProfile killerProfile, LivingEntity player, PlayerProfile playerProfile, boolean npc) {
         try {
             boolean isNight = isNight();
 
@@ -531,7 +558,7 @@ public class CombatListener implements Listener {
         }
         //saves performance
         if (npc) { //NPC Name
-            if(NewConfiguration.INSTANCE.getAlwaysCheckNPC()){
+            if (NewConfiguration.INSTANCE.getAlwaysCheckNPC()) {
                 player.setGameMode(GameMode.SPECTATOR);
                 player.setNoDamageTicks(0);
                 player.spigot().respawn();
@@ -1105,21 +1132,6 @@ public class CombatListener implements Listener {
         }
     }
 
-    @NotNull
-    private static String getBountyString(PlayerProfile killerProfile) {
-        String bountyColor = "&6";
-        if (ThePit.getInstance().getPitConfig().isGenesisEnable()) {
-            GenesisTeam team = killerProfile.getGenesisData().getTeam();
-            if (team == GenesisTeam.ANGEL) {
-                bountyColor = "&b";
-            }
-            if (team == GenesisTeam.DEMON) {
-                bountyColor = "&c";
-            }
-        }
-        return bountyColor;
-    }
-
     private void handleBoardCastMessage(PlayerProfile killerProfile, PlayerProfile playerProfile, Player killer, LivingEntity beKilledPlayer, double totalCoins, double totalXp) {
 
         if (beKilledPlayer instanceof Player) {
@@ -1241,7 +1253,7 @@ public class CombatListener implements Listener {
 //        }
         killerProfile.getUnlockedPerkMap().values().forEach(i -> {
             AbstractPerk abstractPerk = i.getHandle(perkFactory.getPerkMap());
-            if (!abstractPerk.isPassive()) {
+            if (abstractPerk == null || !abstractPerk.isPassive()) {
                 return;
             }
             if (abstractPerk instanceof IPlayerKilledEntity ins) {
@@ -1250,7 +1262,7 @@ public class CombatListener implements Listener {
         });
         killerProfile.getChosePerk().values().forEach(i -> {
             AbstractPerk abstractPerk = i.getHandle(perkFactory.getPerkMap());
-            if (abstractPerk.isPassive()) {
+            if (abstractPerk == null || abstractPerk.isPassive()) {
                 return;
             }
             if (abstractPerk instanceof IPlayerKilledEntity ins) {
@@ -1419,17 +1431,5 @@ public class CombatListener implements Listener {
         if (factory.getActiveEpicEvent() != null) {
             event.setCancelled(true);
         }
-    }
-
-    public static boolean isNight() {
-        if (!ThePit.getInstance().getGlobalConfig().isCurfewEnable()) {
-            return false;
-        }
-
-        final Calendar instance = Calendar.getInstance();
-        instance.setTimeInMillis(System.currentTimeMillis());
-        final int hour = instance.get(Calendar.HOUR_OF_DAY);
-
-        return hour >= ThePit.getInstance().getGlobalConfig().getCurfewStart() && hour <= ThePit.getInstance().getGlobalConfig().getCurfewEnd();
     }
 }

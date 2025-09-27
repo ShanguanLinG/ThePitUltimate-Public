@@ -91,6 +91,11 @@ class PitCommands {
                 "&7Currently running &cThePitUltimate Public"
             )
         )
+        player.sendMessage(
+            CC.translate(
+                "&b&nhttps://github.com/ShanguanLinG/ThePitUltimate-Public"
+            )
+        )
     }
 
     @Execute(name = "startDate")

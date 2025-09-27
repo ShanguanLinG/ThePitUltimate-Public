@@ -9,6 +9,7 @@ import net.mizukilab.pit.util.PublicUtil;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -56,10 +57,11 @@ public class ItemUtil {
     }
 
     public static void setUUIDObj(NBTTagCompound extra, UUID uuid) {
-        setUUID(extra, uuid.toString());
+        setUUID(extra, Objects.requireNonNullElseGet(uuid, UUID::randomUUID).toString());
     }
+    
     public static void setUUIDObj(ItemStack stack, UUID uuid) {
-        setUUID(stack, uuid.toString());
+        setUUID(stack, Objects.requireNonNullElseGet(uuid, UUID::randomUUID).toString());
     }
 
     public static void setUUID(ItemStack stack, String uuid) {
