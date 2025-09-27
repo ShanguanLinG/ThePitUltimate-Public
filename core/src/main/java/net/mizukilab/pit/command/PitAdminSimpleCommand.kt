@@ -334,7 +334,7 @@ class PitAdminSimpleCommand {
             "eggs" -> addItemToPlayer(HighGradeEggs.toItemStack())//高级鸡蛋
             "cake" -> addItemToPlayer(MiniCake.toItemStack())//迷你蛋糕
             "package" -> addItemToPlayer(PackagedBale.toItemStack())//干草
-            "sugar" -> addItemToPlayer(Sugar.toItemStack())//颗粒
+            "sugar" -> addItemToPlayer(Sugar.toItemStack())//糖
             "wheat" -> addItemToPlayer(Wheat.toItemStack())//小麦
             "yummy" -> addItemToPlayer(YummyBread.toItemStack())//美味面包
             else -> {
