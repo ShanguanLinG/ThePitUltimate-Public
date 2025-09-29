@@ -27,8 +27,6 @@ import net.md_5.bungee.api.chat.TextComponent
 import net.minecraft.server.v1_8_R3.NBTTagCompound
 import net.mizukilab.pit.audience
 import net.mizukilab.pit.command.handler.HandHasItem
-import net.mizukilab.pit.enchantment.type.custom.VollewyA
-import net.mizukilab.pit.enchantment.type.custom.Volley_B
 import net.mizukilab.pit.map.kingsquests.ui.CakeBakeUI
 import net.mizukilab.pit.map.kingsquests.ui.KingQuestsUI
 import net.mizukilab.pit.menu.offer.OfferMenu
@@ -951,7 +949,7 @@ class PitCommands {
         ThePit.getApi().openAuctionMenu(player)
     }
 
-    @Execute(name = "changeVolley")
+/*    @Execute(name = "changeVolley")
     @HandHasItem
     fun changeVolley(@Context player: Player) {
         val mythicItem = MythicUtil.getMythicItem(player.itemInHand)
@@ -987,7 +985,7 @@ class PitCommands {
             }
         }
     }
-
+*/
     @Execute(name = "cool")
     fun cool(@Context player: Player) {
         if (!PlayerUtil.isPlayerUnlockedPerk(player, "cool_perk")) {

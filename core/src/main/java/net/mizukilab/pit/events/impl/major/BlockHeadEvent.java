@@ -65,6 +65,7 @@ public class BlockHeadEvent extends AbstractEvent implements IEpicEvent, Listene
     private final Cooldown timer = new Cooldown(5L, TimeUnit.MINUTES);
     private int allblocks = 0;
     private static final Random random = new Random();
+    private final Set<UUID> savedInventoryPlayers = new HashSet<>();
 
 
     @Override
@@ -144,34 +145,40 @@ public class BlockHeadEvent extends AbstractEvent implements IEpicEvent, Listene
             if (stand.getCustomName().contains("钻石套装") && (System.currentTimeMillis() - get(player, "diamond") > 15000)) {
                 refresh(player, "diamond");
                 PlayerInventory inventory = player.getInventory();
-                ItemStack chestplate = inventory.getChestplate();
-                ItemStack leggings = inventory.getLeggings();
-                ItemStack boot = inventory.getBoots();
+
+                ItemStack originalChest = inventory.getChestplate();
+                ItemStack originalLegs = inventory.getLeggings();
+                ItemStack originalBoots = inventory.getBoots();
+
                 inventory.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
                 inventory.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
                 inventory.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-                if (!InventoryUtil.isInvFull(player, 2)) {
-                    if (chestplate != null) {
-                        inventory.addItem(chestplate);
-                    }
-                    if (leggings != null) {
-                        inventory.addItem(leggings);
-                    }
-                    if (boot != null) {
-                        inventory.addItem(boot);
-                    }
 
-                } else {
-                    if (chestplate != null && ItemUtil.isMythicItem(chestplate)) {
-                        inventory.setChestplate(chestplate);
-                    }
-                    if (leggings != null && ItemUtil.isMythicItem(leggings)) {
-                        inventory.setLeggings(leggings);
-                    }
-                    if (boot != null && ItemUtil.isMythicItem(boot)) {
-                        inventory.setBoots(boot);
+                List<ItemStack> toAdd = new ArrayList<>();
+                if (originalChest != null && !originalChest.getType().equals(Material.DIAMOND_CHESTPLATE)) {
+                    toAdd.add(originalChest);
+                }
+                if (originalLegs != null && !originalLegs.getType().equals(Material.DIAMOND_LEGGINGS)) {
+                    toAdd.add(originalLegs);
+                }
+                if (originalBoots != null && !originalBoots.getType().equals(Material.DIAMOND_BOOTS)) {
+                    toAdd.add(originalBoots);
+                }
+
+                for (ItemStack item : toAdd) {
+                    if (ItemUtil.isMythicItem(item)) {
+                        if (item.getType().name().contains("CHESTPLATE")) {
+                            inventory.setChestplate(item);
+                        } else if (item.getType().name().contains("LEGGINGS")) {
+                            inventory.setLeggings(item);
+                        } else if (item.getType().name().contains("BOOTS")) {
+                            inventory.setBoots(item);
+                        }
+                    } else if (!InventoryUtil.isInvFull(player, 1)) {
+                        inventory.addItem(item);
                     }
                 }
+
                 player.playSound(player.getLocation(), Sound.ORB_PICKUP, 100.0f, 1.0f);
                 player.sendMessage(CC.translate("&9&l钻石套装！ &7你已装备钻石套装！"));
             }
@@ -442,10 +449,11 @@ public class BlockHeadEvent extends AbstractEvent implements IEpicEvent, Listene
                 PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
                 profile.setTempInvUsing(false);
                 PlayerBlockHeadData data = dataMap.get(player.getUniqueId());
-                if (data != null) {
-                    dataMap.remove(player.getUniqueId());
+                if (data != null && savedInventoryPlayers.contains(player.getUniqueId())) {
+                    profile.getInventory().applyItemToPlayer(player);
+                    savedInventoryPlayers.remove(player.getUniqueId());
                 }
-                PlayerProfile.getPlayerProfileByUuid(player.getUniqueId()).getInventory().applyItemToPlayer(player);
+                dataMap.remove(player.getUniqueId());
             }
             entities.removeIf(i -> {
                 i.remove();
@@ -461,6 +469,7 @@ public class BlockHeadEvent extends AbstractEvent implements IEpicEvent, Listene
             }
             oriBlock.clear();
             pup.clear();
+            savedInventoryPlayers.clear();
         });
     }
 
@@ -481,9 +490,15 @@ public class BlockHeadEvent extends AbstractEvent implements IEpicEvent, Listene
 
     @EventHandler
     public void onSpawn(PitPlayerSpawnEvent event) {
-        PlayerBlockHeadData data = dataMap.get(event.getPlayer().getUniqueId());
-        PlayerProfile.getPlayerProfileByUuid(event.getPlayer().getUniqueId()).getInventory().applyItemToPlayer(event.getPlayer());
-        sendPacket(event.getPlayer());
+        Player player = event.getPlayer();
+        PlayerBlockHeadData data = dataMap.get(player.getUniqueId());
+
+        if (data != null) {
+            sendPacket(player);
+            if (player.getInventory().getHelmet() == null) {
+                player.getInventory().setHelmet(new ItemStack(data.block));
+            }
+        }
     }
 
     @EventHandler
@@ -500,7 +515,12 @@ public class BlockHeadEvent extends AbstractEvent implements IEpicEvent, Listene
     @SneakyThrows
     public void onProfileLoad(PitProfileLoadedEvent event) {
         Player player = Bukkit.getPlayer(event.getPlayerProfile().getPlayerUuid());
-        newdata(player);
+        if (player == null) return;
+        if (!dataMap.containsKey(player.getUniqueId())) {
+            newdata(player);
+        } else {
+            sendPacket(player);
+        }
     }
 
     public int getRank(Player player) {
@@ -533,20 +553,28 @@ public class BlockHeadEvent extends AbstractEvent implements IEpicEvent, Listene
 
     public void newdata(Player player) {
         PlayerBlockHeadData data;
+        boolean isNewPlayer = false;
+
         if (!dataMap.containsKey(player.getUniqueId())) {
             data = new PlayerBlockHeadData();
             data.uuid = player.getUniqueId();
             data.name = player.getName();
             dataMap.put(player.getUniqueId(), data);
+            isNewPlayer = true;
         }
+
         data = dataMap.get(player.getUniqueId());
         data.belong = 0;
         data.block = pickRandomBlockMaterial();
         dataMap.put(player.getUniqueId(), data);
 
-        PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
-        profile.setInventory(PlayerInv.fromPlayerInventory(player.getInventory()));
-        profile.setTempInvUsing(true);
+        if (isNewPlayer && !savedInventoryPlayers.contains(player.getUniqueId())) {
+            PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
+            profile.setInventory(PlayerInv.fromPlayerInventory(player.getInventory()));
+            profile.setTempInvUsing(true);
+            savedInventoryPlayers.add(player.getUniqueId());
+        }
+
         sendPacket(player);
     }
 
