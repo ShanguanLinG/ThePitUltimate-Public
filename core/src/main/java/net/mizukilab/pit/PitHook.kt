@@ -9,10 +9,7 @@ import dev.rollczi.litecommands.bukkit.LiteBukkitMessages
 import dev.rollczi.litecommands.meta.Meta
 import dev.rollczi.litecommands.validator.ValidatorScope
 import net.mizukilab.pit.actionbar.ActionBarManager
-import net.mizukilab.pit.command.PitAdminCommands
-import net.mizukilab.pit.command.PitAdminDupeFixCommands
-import net.mizukilab.pit.command.PitAdminSimpleCommand
-import net.mizukilab.pit.command.PitCommands
+import net.mizukilab.pit.command.*
 import net.mizukilab.pit.command.handler.HandHasItem
 import net.mizukilab.pit.command.handler.HandHasItemValidator
 import net.mizukilab.pit.command.handler.metaKey
@@ -202,6 +199,7 @@ object PitHook {
                 PitAdminSimpleCommand(),
                 PitAdminCommands(),
                 PitCommands(),
+                PitItemCommands(),
                 PitAdminDupeFixCommands()
             )
             .settings {

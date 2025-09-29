@@ -96,9 +96,7 @@ public class CDKMenu extends Menu {
                     final BaseComponent[] chat = new ChatComponentBuilder(CC.translate("&e[复制CDK]"))
                             .setCurrentClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, data.getCdk()))
                             .create();
-
                     player.spigot().sendMessage(chat);
-
                     data.active();
                     player.closeInventory();
 

@@ -88,7 +88,7 @@ class PitCommands {
     fun info(@Context player: Player) {
         player.sendMessage("")
         player.sendMessage(CC.translate("&7Currently running &cThePitUltimate Public."))
-        player.sendMessage(CC.translate("&7Production By &dShanguanLinG."))
+        player.sendMessage(CC.translate("&7Production By &dShanguanLinG, &cAPNF."))
         player.sendMessage(CC.translate("&b&nhttps://github.com/ShanguanLinG/ThePitUltimate-Public"))
         player.sendMessage("")
     }
