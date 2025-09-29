@@ -19,6 +19,11 @@ import java.util.*;
 
 public class AllSavedMythicItemsMenu extends Menu {
 
+    /**
+     * @Author ShanguanLinG
+     * @Created 2025/09/30 3:53
+     */
+
     private static final int ITEMS_PER_PAGE = 45;
 
     private final int page;
@@ -52,11 +57,11 @@ public class AllSavedMythicItemsMenu extends Menu {
         loadItems();
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, items.size());
-        
+
         int slot = 0;
         for (int i = startIndex; i < endIndex; i++) {
             Document doc = items.get(i);
-            buttons.put(slot++, new ItemButton(doc));
+            buttons.put(slot++, new ItemButton(doc, page));
         }
 
         // 上一页
@@ -77,7 +82,7 @@ public class AllSavedMythicItemsMenu extends Menu {
                 }
             });
         }
-        
+
         // 下一页
         if (endIndex < items.size()) {
             buttons.put(53, new Button() {
@@ -133,9 +138,11 @@ public class AllSavedMythicItemsMenu extends Menu {
 
     private static class ItemButton extends Button {
         private final Document document;
+        private final int currentPage;
 
-        public ItemButton(Document document) {
+        public ItemButton(Document document, int currentPage) {
             this.document = document;
+            this.currentPage = currentPage;
         }
 
         @Override
@@ -150,6 +157,9 @@ public class AllSavedMythicItemsMenu extends Menu {
             lore.add(CC.translate("&7创建者: &f" + document.getString("createdByName")));
             long createdAt = document.getLong("createdAt");
             lore.add(CC.translate("&7创建时间: &f" + sdf.format(new Date(createdAt))));
+            lore.add("");
+            lore.add(CC.translate("&e左键点击查看物品"));
+            lore.add(CC.translate("&c右键点击删除物品"));
             meta.setLore(lore);
             item.setItemMeta(meta);
             return item;
@@ -159,6 +169,15 @@ public class AllSavedMythicItemsMenu extends Menu {
         public void clicked(Player player, int slot, ClickType clickType, int hotbarButton, ItemStack currentItem) {
             String uuid = document.getString("uuid");
             String encodedItem = document.getString("item");
+
+            if (clickType == ClickType.RIGHT) {
+                MongoCollection<Document> collection = ThePit.getInstance().getMongoDB().getDatabase().getCollection("saved_mythic_items");
+                collection.deleteOne(new Document("uuid", uuid));
+                player.sendMessage(CC.translate("&a成功删除物品!"));
+                new AllSavedMythicItemsMenu(currentPage).openMenu(player);
+                return;
+            }
+
             if (uuid != null && encodedItem != null) {
                 new SavedMythicItemMenu(uuid, encodedItem).openMenu(player);
             }

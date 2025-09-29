@@ -419,6 +419,11 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder saved(boolean saved) {
+        this.changeNbt("saved", saved);
+        return this;
+    }
+
     public ItemBuilder itemDamage(double damageValue) {
         net.minecraft.server.v1_8_R3.ItemStack nmsItem = PublicUtil.toNMStackQuick(is);
         NBTTagCompound tag = getNbtTagCompound(nmsItem.getTag());

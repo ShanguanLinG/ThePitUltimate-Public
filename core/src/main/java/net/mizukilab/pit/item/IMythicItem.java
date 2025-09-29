@@ -41,6 +41,10 @@ import java.util.UUID;
 @Skip
 public abstract class IMythicItem extends AbstractPitItem {
 
+    @Getter
+    private final static String defUUIDString = "00000000-0000-0000-0000-000000000001";
+    @Getter
+    private final static UUID defUUID = UUID.fromString("00000000-0000-0000-0000-000000000001");
     public int maxLive;
     public int live;
     public int tier;
@@ -49,13 +53,12 @@ public abstract class IMythicItem extends AbstractPitItem {
     public String version;
     public String prefix;
     public boolean boostedByGem = false;
-    @Getter
-    private final static String defUUIDString = "00000000-0000-0000-0000-000000000001";
-    @Getter
-    private final static UUID defUUID = UUID.fromString("00000000-0000-0000-0000-000000000001");
     public String customName = null;
 
     public boolean boostedByBook = false;
+
+    // 添加保存状态属性
+    public boolean saved = false;
 
     public UUID uuid;
 
@@ -238,7 +241,15 @@ public abstract class IMythicItem extends AbstractPitItem {
         }
         if (uuid != null) {
             boolean equals = uuid == null || defUUID.equals(uuid);
-            lore.add("&8" + (equals ? "Refresh on table" : uuid.toString()));
+            boolean saved = this.saved;
+            String uuidColor = "&8";
+            if (saved) {
+                if (MythicColor.DARK.getChatColor().equals(color.getChatColor())) uuidColor = "&d";
+                if (MythicColor.RAGE.getChatColor().equals(color.getChatColor())) uuidColor = "&c";
+                if ("mythic_sword".equals(this.getInternalName())) uuidColor = "&e";
+                if ("mythic_bow".equals(this.getInternalName())) uuidColor = "&b";
+            }
+            lore.add(uuidColor + (equals ? "Refresh on table" : uuid.toString()));
         }
 
         if (this instanceof IMythicSword mythicSword) {
@@ -280,6 +291,11 @@ public abstract class IMythicItem extends AbstractPitItem {
                     .makeBoostedByBook(boostedByBook)
                     .tier(this.tier)
                     .recordEnchantments(enchantmentRecords);
+        }
+
+        // 设置保存状态
+        if (saved) {
+            builder.saved(true);
         }
 
         if (dyeColor != null) {
@@ -334,6 +350,9 @@ public abstract class IMythicItem extends AbstractPitItem {
         this.boostedByGlobalGem = extra.getBoolean("boostedByGlobalGem");
 
         this.boostedByBook = extra.getBoolean("boostedByBook");
+
+        // 检查物品是否已保存
+        this.saved = extra.getBoolean("saved");
 
         //for raw type opti
         NBTBase prefix1 = extra.get("prefix");
@@ -393,7 +412,7 @@ public abstract class IMythicItem extends AbstractPitItem {
             String recordsString = ((NBTTagString) recordsStringRaw).a_();
 
             for (String recordString : Utils.splitByCharAt(recordsString, ';')) {
-                final String[] split = Utils.splitByCharAt(recordString,'|');
+                final String[] split = Utils.splitByCharAt(recordString, '|');
                 if (split.length >= 3) {
                     enchantmentRecords.add(
                             new EnchantmentRecord(

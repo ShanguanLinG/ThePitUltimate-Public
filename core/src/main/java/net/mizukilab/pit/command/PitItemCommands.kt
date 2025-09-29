@@ -10,11 +10,12 @@ import dev.rollczi.litecommands.annotations.execute.Execute
 import dev.rollczi.litecommands.annotations.permission.Permission
 import net.md_5.bungee.api.chat.ClickEvent
 import net.mizukilab.pit.command.handler.HandHasItem
-import net.mizukilab.pit.menu.item.SavedMythicItemMenu
 import net.mizukilab.pit.menu.item.AllSavedMythicItemsMenu
+import net.mizukilab.pit.menu.item.SavedMythicItemMenu
 import net.mizukilab.pit.util.chat.CC
 import net.mizukilab.pit.util.chat.ChatComponentBuilder
 import net.mizukilab.pit.util.inventory.InventoryUtil
+import net.mizukilab.pit.util.item.ItemBuilder
 import net.mizukilab.pit.util.item.ItemUtil
 import org.bson.Document
 import org.bukkit.Material
@@ -23,10 +24,15 @@ import org.bukkit.entity.Player
 @Command(name = "pit")
 class PitItemCommands {
 
+    /**
+     * @Author ShanguanLinG
+     * @Created 2025/09/30 3:53
+     */
+
     @Execute(name = "saveItem")
     @HandHasItem(mythic = true)
     fun saveItem(@Context player: Player) {
-        val item = player.itemInHand
+        var item = player.itemInHand
         if (item == null || item.type == Material.AIR) {
             player.sendMessage(CC.translate("&c&l错误! &c请手持需要保存的神话物品."))
             return
@@ -40,12 +46,19 @@ class PitItemCommands {
             player.sendMessage(CC.translate("&c&l错误! &c该物品缺少唯一UUID."))
             return
         }
+
         val internal = ItemUtil.getInternalName(item)
         val encoded = InventoryUtil.serializeItemStack(item)
         if (encoded == null) {
             player.sendMessage(CC.translate("&c&l错误! &c序列化物品失败."))
             return
         }
+
+        val savedItem = ItemBuilder(item).saved(true).build()
+        val mmItem = ThePit.getInstance().itemFactory.getItemFromStack(savedItem)
+        player.itemInHand = mmItem.toItemStack()
+        player.updateInventory()
+        
         val collection = ThePit.getInstance().mongoDB.database.getCollection("saved_mythic_items")
         val doc = Document()
             .append("uuid", uuid)

@@ -21,6 +21,11 @@ import java.util.Map;
 
 public class SavedMythicItemMenu extends Menu {
 
+    /**
+     * @Author ShanguanLinG
+     * @Created 2025/09/30 3:53
+     */
+
     private final String uuid;
     private final String encodedItem;
 
