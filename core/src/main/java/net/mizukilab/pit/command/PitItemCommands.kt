@@ -32,7 +32,7 @@ class PitItemCommands {
     @Execute(name = "saveItem")
     @HandHasItem(mythic = true)
     fun saveItem(@Context player: Player) {
-        var item = player.itemInHand
+        val item = player.itemInHand
         if (item == null || item.type == Material.AIR) {
             player.sendMessage(CC.translate("&c&l错误! &c请手持需要保存的神话物品."))
             return
@@ -46,19 +46,17 @@ class PitItemCommands {
             player.sendMessage(CC.translate("&c&l错误! &c该物品缺少唯一UUID."))
             return
         }
-
         val internal = ItemUtil.getInternalName(item)
-        val encoded = InventoryUtil.serializeItemStack(item)
+        val savedItem = ItemBuilder(item).saved(true).build()
+        val mmItem = ThePit.getInstance().itemFactory.getItemFromStack(savedItem)
+        val updatedItem = mmItem.toItemStack()
+        player.itemInHand = updatedItem
+        player.updateInventory()
+        val encoded = InventoryUtil.serializeItemStack(updatedItem)
         if (encoded == null) {
             player.sendMessage(CC.translate("&c&l错误! &c序列化物品失败."))
             return
         }
-
-        val savedItem = ItemBuilder(item).saved(true).build()
-        val mmItem = ThePit.getInstance().itemFactory.getItemFromStack(savedItem)
-        player.itemInHand = mmItem.toItemStack()
-        player.updateInventory()
-        
         val collection = ThePit.getInstance().mongoDB.database.getCollection("saved_mythic_items")
         val doc = Document()
             .append("uuid", uuid)
