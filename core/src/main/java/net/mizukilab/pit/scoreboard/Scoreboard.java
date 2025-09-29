@@ -103,7 +103,6 @@ public class Scoreboard implements AssembleAdapter {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    //ignore
                 }
 
             }

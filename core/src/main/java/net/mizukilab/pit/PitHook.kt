@@ -27,8 +27,6 @@ import net.mizukilab.pit.enchantment.type.aqua.RogueEnchant
 import net.mizukilab.pit.enchantment.type.auction.FractionalReserveEnchant
 import net.mizukilab.pit.enchantment.type.auction.rare.PaparazziEnchant
 import net.mizukilab.pit.enchantment.type.auction.rare.PitMBAEnchant
-import net.mizukilab.pit.enchantment.type.custom.VollewyA
-import net.mizukilab.pit.enchantment.type.custom.Volley_B
 import net.mizukilab.pit.enchantment.type.dark_normal.*
 import net.mizukilab.pit.enchantment.type.dark_rare.*
 import net.mizukilab.pit.enchantment.type.genesis.*
@@ -88,7 +86,6 @@ import net.mizukilab.pit.perk.type.streak.highlander.GoldNanoFactoryKillStreak
 import net.mizukilab.pit.perk.type.streak.highlander.HighlanderMegaStreak
 import net.mizukilab.pit.perk.type.streak.highlander.KhanateKillStreak
 import net.mizukilab.pit.perk.type.streak.highlander.WitherCraftKillStreak
-import net.mizukilab.pit.perk.type.streak.king.Despot
 import net.mizukilab.pit.perk.type.streak.nonpurchased.*
 import net.mizukilab.pit.perk.type.streak.tothemoon.GoldStack
 import net.mizukilab.pit.perk.type.streak.tothemoon.SuperStreaker
@@ -509,28 +506,6 @@ private fun loadEnchants() {
         EliminatePowerEnchant::class.java,
         SpywareEnchant::class.java,
     )
-
-    /*        classes += HappyNewYearEnchant::class.java
-            classes += WitheredAndPiercingThroughTheHeart::class.ja
-*/
-//        classes += TrotEnchant::class.java
-//        classes += TrytoGiveEnchant::class.java
-//
-//        classes += BreakArmorEnchant::class.java
-//        //classes += CoinGloriousEnchant::class.java
-//        classes += ComboBacktrackEnchant::class.java
-//        classes += DoubleJumpEnchant::class.java
-//        classes += SacredArrowEnchant::class.java
-//        //classes += TrashPandaEnchant::class.java
-//        classes += JerryEnchant5::class.java
-
-    //  classes += Limit24520Ench::class.java
-    //  classes += LimitXZQ1Ench::class.java
-    if (ThePit.getInstance().globalConfig.token == "SmallMY"){
-        classes += VollewyA::class.java
-        classes += Volley_B::class.java
-        classes -= VolleyEnchant::class.java
-    }
     music.apply {
         add(JerryEnchant())
         add(JerryEnchant2())

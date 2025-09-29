@@ -134,10 +134,9 @@ public class TradeMenu extends Menu {
 
     @Override
     public void onClickEvent(InventoryClickEvent event) {
-        if (event.getWhoClicked() instanceof Player && event.getClickedInventory() instanceof PlayerInventory) {
+        if (event.getWhoClicked() instanceof Player player && event.getClickedInventory() instanceof PlayerInventory) {
             if (event.getCurrentItem() != null && event.getCurrentItem().getType() != Material.AIR) {
                 event.setCancelled(true);
-                Player player = (Player) event.getWhoClicked();
                 if (!ItemUtil.canTrade(event.getCurrentItem()) && !player.hasPermission("pit.admin")) {
                     player.sendMessage(CC.translate("&c此物品无法用于交易!"));
                     return;
