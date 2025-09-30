@@ -351,7 +351,6 @@ public abstract class IMythicItem extends AbstractPitItem {
 
         this.boostedByBook = extra.getBoolean("boostedByBook");
 
-        // 检查物品是否已保存
         this.saved = extra.getBoolean("saved");
 
         //for raw type opti

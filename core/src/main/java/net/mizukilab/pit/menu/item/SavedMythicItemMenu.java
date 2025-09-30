@@ -79,7 +79,7 @@ public class SavedMythicItemMenu extends Menu {
             }
         });
 
-        map.put(26, new Button() {
+        if (player.hasPermission("pit.admin")) map.put(26, new Button() {
             @Override
             public ItemStack getButtonItem(Player player) {
                 ItemStack item = new ItemStack(Material.ARROW);
@@ -94,13 +94,13 @@ public class SavedMythicItemMenu extends Menu {
                 new AllSavedMythicItemsMenu().openMenu(player);
             }
         });
-        
+
         return map;
     }
 
     private void buildLoreForEnchantmentRecords(ItemBuilder builder, IMythicItem mythicItem) {
         List<EnchantmentRecord> enchantmentRecords = mythicItem.getEnchantmentRecords();
-        if(enchantmentRecords.isEmpty()){
+        if (enchantmentRecords.isEmpty()) {
             builder.lore("&c此物品没有附魔记录.");
             return;
         }

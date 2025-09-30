@@ -4,7 +4,7 @@ import cn.charlotte.pit.ThePit
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.ReplaceOptions
 import dev.rollczi.litecommands.annotations.argument.Arg
-import dev.rollczi.litecommands.annotations.command.Command
+import dev.rollczi.litecommands.annotations.command.RootCommand
 import dev.rollczi.litecommands.annotations.context.Context
 import dev.rollczi.litecommands.annotations.execute.Execute
 import dev.rollczi.litecommands.annotations.permission.Permission
@@ -18,10 +18,9 @@ import net.mizukilab.pit.util.inventory.InventoryUtil
 import net.mizukilab.pit.util.item.ItemBuilder
 import net.mizukilab.pit.util.item.ItemUtil
 import org.bson.Document
-import org.bukkit.Material
 import org.bukkit.entity.Player
 
-@Command(name = "pit")
+@RootCommand
 class PitItemCommands {
 
     /**
@@ -33,14 +32,6 @@ class PitItemCommands {
     @HandHasItem(mythic = true)
     fun saveItem(@Context player: Player) {
         val item = player.itemInHand
-        if (item == null || item.type == Material.AIR) {
-            player.sendMessage(CC.translate("&c&l错误! &c请手持需要保存的神话物品."))
-            return
-        }
-        if (!ItemUtil.isMythicItem(item)) {
-            player.sendMessage(CC.translate("&c&l错误! &7这不是一件有效的神话物品."))
-            return
-        }
         val uuid = ItemUtil.getUUID(item)
         if (uuid == null) {
             player.sendMessage(CC.translate("&c&l错误! &c该物品缺少唯一UUID."))
@@ -72,6 +63,12 @@ class PitItemCommands {
         player.spigot().sendMessage(*chat)
     }
 
+    @Execute(name = "si")
+    @HandHasItem(mythic = true)
+    fun saveItemAlias(@Context player: Player) {
+        saveItem(player)
+    }
+
     @Execute(name = "searchItem")
     fun searchItem(@Context player: Player, @Arg("uuid") uuid: String) {
         val collection = ThePit.getInstance().mongoDB.database.getCollection("saved_mythic_items")
@@ -88,10 +85,21 @@ class PitItemCommands {
         SavedMythicItemMenu(uuid, encoded).openMenu(player)
     }
 
+    @Execute(name = "sei")
+    fun searchItemAlias(@Context player: Player, @Arg("uuid") uuid: String) {
+        searchItem(player, uuid)
+    }
+
     @Execute(name = "savedItems")
     @Permission("pit.admin")
     fun showSavedItems(@Context player: Player) {
         AllSavedMythicItemsMenu().openMenu(player)
+    }
+
+    @Execute(name = "sis")
+    @Permission("pit.admin")
+    fun showSavedItemsAlias(@Context player: Player) {
+        showSavedItems(player)
     }
 
     @Execute(name = "removeItem")
@@ -104,5 +112,11 @@ class PitItemCommands {
         } else {
             player.sendMessage(CC.translate("&c&l错误! &c未找到可删除的记录: &e$uuid"))
         }
+    }
+
+    @Execute(name = "ri")
+    @Permission("pit.admin")
+    fun removeItemAlias(@Context player: Player, @Arg("uuid") uuid: String) {
+        removeItem(player, uuid)
     }
 }
