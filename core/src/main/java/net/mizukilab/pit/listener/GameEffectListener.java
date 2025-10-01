@@ -163,8 +163,17 @@ public class GameEffectListener implements Listener {
             if (NewConfiguration.INSTANCE.getRepairFeatures())  {
                 if (event.getEntity() instanceof CraftLivingEntity livingEntity) { //特性修复 //TODO
                     if (livingEntity.getHandle().hurtTicks > 5) {
-                        event.setCancelled(true);
-                        return;
+                        // 添加调试信息
+                        if (event.getEntity() instanceof Player player) {
+                            PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
+                            if (profile.getPlayerOption().isDebugDamageMessage()) {
+                                player.sendMessage(CC.translate("&c伤害被hurtTicks检查取消: " + livingEntity.getHandle().hurtTicks));
+                            }
+                        }
+                        // 修复：重置hurtTicks而不是取消伤害
+                        livingEntity.getHandle().hurtTicks = 0;
+                        // event.setCancelled(true);
+                        // return;
                     }
                 }
             }
@@ -350,6 +359,13 @@ public class GameEffectListener implements Listener {
                         }
                     }
                     if (enchantLevel > 0 && finalDamage.get() > 0 && finalDamage.get() < 1000) {
+                        // 添加调试信息
+                        if (event.getEntity() instanceof Player player) {
+                            PlayerProfile playerProfile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
+                            if (playerProfile.getPlayerOption().isDebugDamageMessage()) {
+                                player.sendMessage(CC.translate("&cMirror附魔将finalDamage设置为0: " + finalDamage.get()));
+                            }
+                        }
                         finalDamage.set(0);
                     }
                 }
@@ -415,6 +431,13 @@ public class GameEffectListener implements Listener {
             }
 
         } else {
+            // 添加调试信息
+            if (event.getEntity() instanceof Player player) {
+                PlayerProfile profile = PlayerProfile.getPlayerProfileByUuid(player.getUniqueId());
+                if (profile.getPlayerOption().isDebugDamageMessage()) {
+                    player.sendMessage(CC.translate("&c伤害事件被取消: cancel=" + cancel.get()));
+                }
+            }
             event.setCancelled(true);
         }
 
