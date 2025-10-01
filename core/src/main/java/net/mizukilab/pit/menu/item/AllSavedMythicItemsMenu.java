@@ -1,9 +1,8 @@
-package net.mizukilab.pit.menu;
+package net.mizukilab.pit.menu.item;
 
 import cn.charlotte.pit.ThePit;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import net.mizukilab.pit.menu.item.SavedMythicItemMenu;
 import net.mizukilab.pit.util.chat.CC;
 import net.mizukilab.pit.util.inventory.InventoryUtil;
 import net.mizukilab.pit.util.menu.Button;
@@ -28,37 +27,22 @@ public class AllSavedMythicItemsMenu extends Menu {
     private static final int ITEMS_PER_PAGE = 45;
 
     private final int page;
-    private final String playerId; // 添加玩家ID字段
     private List<Document> items;
 
     public AllSavedMythicItemsMenu() {
-        this(1, null);
+        this(1);
     }
 
     public AllSavedMythicItemsMenu(int page) {
-        this(page, null);
-    }
-
-    public AllSavedMythicItemsMenu(int page, String playerId) {
         this.page = page;
-        this.playerId = playerId;
         this.setAutoUpdate(true);
-    }
-
-    public AllSavedMythicItemsMenu(List<Document> items, String playerId) {
-        this.items = items;
-        this.page = 1;
-        this.playerId = playerId;
-        this.setAutoUpdate(false);
     }
 
     @Override
     public String getTitle(Player player) {
+        // 先加载物品以计算总页数
         loadItems();
         int totalPages = (items.size() + ITEMS_PER_PAGE - 1) / ITEMS_PER_PAGE;
-        if (playerId != null) {
-            return CC.translate("&8(" + page + "/" + totalPages + ") " + playerId + " 保存的物品");
-        }
         return CC.translate("&8(" + page + "/" + totalPages + ") 保存的物品");
     }
 
@@ -77,7 +61,7 @@ public class AllSavedMythicItemsMenu extends Menu {
         int slot = 0;
         for (int i = startIndex; i < endIndex; i++) {
             Document doc = items.get(i);
-            buttons.put(slot++, new ItemButton(doc, page, playerId));
+            buttons.put(slot++, new ItemButton(doc, page));
         }
 
         // 上一页
@@ -94,11 +78,7 @@ public class AllSavedMythicItemsMenu extends Menu {
 
                 @Override
                 public void clicked(Player player, int slot, ClickType clickType, int hotbarButton, ItemStack currentItem) {
-                    if (playerId != null) {
-                        new AllSavedMythicItemsMenu(page - 1, playerId).openMenu(player);
-                    } else {
-                        new AllSavedMythicItemsMenu(page - 1).openMenu(player);
-                    }
+                    new AllSavedMythicItemsMenu(page - 1).openMenu(player);
                 }
             });
         }
@@ -117,11 +97,7 @@ public class AllSavedMythicItemsMenu extends Menu {
 
                 @Override
                 public void clicked(Player player, int slot, ClickType clickType, int hotbarButton, ItemStack currentItem) {
-                    if (playerId != null) {
-                        new AllSavedMythicItemsMenu(page + 1, playerId).openMenu(player);
-                    } else {
-                        new AllSavedMythicItemsMenu(page + 1).openMenu(player);
-                    }
+                    new AllSavedMythicItemsMenu(page + 1).openMenu(player);
                 }
             });
         }
@@ -154,16 +130,7 @@ public class AllSavedMythicItemsMenu extends Menu {
         }
         this.items = new ArrayList<>();
         MongoCollection<Document> collection = ThePit.getInstance().getMongoDB().getDatabase().getCollection("saved_mythic_items");
-        
-        FindIterable<Document> iterable;
-        if (playerId != null) {
-            // 如果指定了玩家ID，则只加载该玩家的物品
-            iterable = collection.find(new Document("createdByName", playerId)).sort(new Document("createdAt", -1));
-        } else {
-            // 否则加载所有物品
-            iterable = collection.find().sort(new Document("createdAt", -1)); // 按创建时间倒序排序
-        }
-        
+        FindIterable<Document> iterable = collection.find().sort(new Document("createdAt", -1)); // 按创建时间倒序排序
         for (Document doc : iterable) {
             this.items.add(doc);
         }
@@ -172,12 +139,10 @@ public class AllSavedMythicItemsMenu extends Menu {
     private static class ItemButton extends Button {
         private final Document document;
         private final int currentPage;
-        private final String playerId;
 
-        public ItemButton(Document document, int currentPage, String playerId) {
+        public ItemButton(Document document, int currentPage) {
             this.document = document;
             this.currentPage = currentPage;
-            this.playerId = playerId;
         }
 
         @Override
@@ -209,16 +174,12 @@ public class AllSavedMythicItemsMenu extends Menu {
                 MongoCollection<Document> collection = ThePit.getInstance().getMongoDB().getDatabase().getCollection("saved_mythic_items");
                 collection.deleteOne(new Document("uuid", uuid));
                 player.sendMessage(CC.translate("&a成功删除物品!"));
-                if (playerId != null) {
-                    new AllSavedMythicItemsMenu(currentPage, playerId).openMenu(player);
-                } else {
-                    new AllSavedMythicItemsMenu(currentPage).openMenu(player);
-                }
+                new AllSavedMythicItemsMenu(currentPage).openMenu(player);
                 return;
             }
 
             if (uuid != null && encodedItem != null) {
-                new SavedMythicItemMenu(uuid, encodedItem, currentPage, playerId).openMenu(player);
+                new SavedMythicItemMenu(uuid, encodedItem).openMenu(player);
             }
         }
     }

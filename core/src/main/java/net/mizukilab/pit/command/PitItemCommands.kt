@@ -7,11 +7,10 @@ import dev.rollczi.litecommands.annotations.argument.Arg
 import dev.rollczi.litecommands.annotations.command.RootCommand
 import dev.rollczi.litecommands.annotations.context.Context
 import dev.rollczi.litecommands.annotations.execute.Execute
-import dev.rollczi.litecommands.annotations.optional.OptionalArg
 import dev.rollczi.litecommands.annotations.permission.Permission
 import net.md_5.bungee.api.chat.ClickEvent
 import net.mizukilab.pit.command.handler.HandHasItem
-import net.mizukilab.pit.menu.AllSavedMythicItemsMenu
+import net.mizukilab.pit.menu.item.AllSavedMythicItemsMenu
 import net.mizukilab.pit.menu.item.SavedMythicItemMenu
 import net.mizukilab.pit.util.chat.CC
 import net.mizukilab.pit.util.chat.ChatComponentBuilder
@@ -93,26 +92,14 @@ class PitItemCommands {
 
     @Execute(name = "savedItems")
     @Permission("pit.admin")
-    fun showSavedItems(@Context player: Player, @OptionalArg("playerId") playerId: String?) {
-        if (playerId != null) {
-            // 查询特定玩家保存的所有神话物品
-            val collection = ThePit.getInstance().mongoDB.database.getCollection("saved_mythic_items")
-            val foundItems = collection.find(Filters.eq("createdByName", playerId)).into(mutableListOf())
-            if (foundItems.isEmpty()) {
-                player.sendMessage(CC.translate("&c&l错误! &7未找到玩家 &f$playerId &7保存的神话物品."))
-                return
-            }
-
-            AllSavedMythicItemsMenu(foundItems, playerId).openMenu(player)
-        } else {
-            AllSavedMythicItemsMenu().openMenu(player)
-        }
+    fun showSavedItems(@Context player: Player) {
+        AllSavedMythicItemsMenu().openMenu(player)
     }
 
     @Execute(name = "sis")
     @Permission("pit.admin")
-    fun showSavedItemsAlias(@Context player: Player, @OptionalArg("playerId") playerId: String?) {
-        showSavedItems(player, playerId)
+    fun showSavedItemsAlias(@Context player: Player) {
+        showSavedItems(player)
     }
 
     @Execute(name = "removeItem")
@@ -121,7 +108,7 @@ class PitItemCommands {
         val collection = ThePit.getInstance().mongoDB.database.getCollection("saved_mythic_items")
         val result = collection.deleteOne(Filters.eq("uuid", uuid))
         if (result.deletedCount > 0) {
-            player.sendMessage(CC.translate("&a&l删除成功! &7已删除UUID为 &f$uuid &7的神话物品记录"))
+            player.sendMessage(CC.translate("&a&l删除成功! &7已删除UUID为 &e$uuid &a的神话物品记录"))
         } else {
             player.sendMessage(CC.translate("&c&l错误! &c未找到可删除的记录: &e$uuid"))
         }
