@@ -197,7 +197,8 @@ object PitHook {
                 PitAdminCommands(),
                 PitCommands(),
                 PitItemCommands(),
-                PitAdminDupeFixCommands()
+                PitAdminDupeFixCommands(),
+                DebugCommands()
             )
             .settings {
                 it.nativePermissions(true)
